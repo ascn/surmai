@@ -29,6 +29,9 @@ export const configureI18next = async () => {
       interpolation: {
         escapeValue: false,
       },
+      resources: {
+        'en-US': { translation: require('../../public/locales/en-US/translation.json') },
+      },
     });
 
   return i18n;
