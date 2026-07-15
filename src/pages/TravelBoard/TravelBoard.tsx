@@ -6,6 +6,7 @@ import {
   Container,
   Divider,
   Group,
+  List,
   LoadingOverlay,
   SimpleGrid,
   Stack,
@@ -129,7 +130,7 @@ const TravelBoard = () => {
               <StatsCard title={t('days', 'Days')} value={filteredData.totalDays} />
               <StatsCard
                 title={t('cost', 'Cost')}
-                value={`${formatCost({value: filteredData.totalExpenseAmount, currency: filteredData.userCurrency})}`}
+                value={`${formatCost({ value: filteredData.totalExpenseAmount, currency: filteredData.userCurrency })}`}
                 note={
                   filteredData.isDefaultCurrency
                     ? t('default_currency_note', 'Showing in USD (default) because no currency is set in your profile.')
@@ -261,7 +262,7 @@ const TravelBoard = () => {
                         <Group key={currency} justify="space-between">
                           <Text size="sm">{currency}</Text>
                           <Text size="sm" fw={500}>
-                            {formatCost({value: Number(amount), currency: currency})}
+                            {formatCost({ value: Number(amount), currency: currency })}
                           </Text>
                         </Group>
                       ))}
@@ -280,7 +281,7 @@ const TravelBoard = () => {
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                {filteredData.markers.map(({ place, tripId, tripName }) => (
+                {filteredData.markers.map(({ place, tripIds, tripNames }) => (
                   <Marker key={place.id} position={[parseFloat(place.latitude!), parseFloat(place.longitude!)]}>
                     <Popup>
                       <Stack gap={0}>
@@ -290,10 +291,15 @@ const TravelBoard = () => {
                             {place.stateName}, {place.countryName}
                           </Text>
                         </Text>
-
-                        <Anchor component={Link} to={`/trips/${tripId}`} target="_blank" size="xs">
-                          {tripName}
-                        </Anchor>
+                        <List size="xs">
+                          {tripIds.map((tripId, idx) => (
+                            <List.Item>
+                              <Anchor component={Link} to={`/trips/${tripId}`} target="_blank" size="xs">
+                                {tripNames[idx]}
+                              </Anchor>
+                            </List.Item>
+                          ))}
+                        </List>
                       </Stack>
                     </Popup>
                   </Marker>

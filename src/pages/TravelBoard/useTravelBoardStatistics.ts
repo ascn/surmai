@@ -157,13 +157,19 @@ export const useTravelBoardStatistics = (year: string | null) => {
     });
 
     // Map markers
-    const markers: { place: Place; tripId: string; tripName: string }[] = [];
+    const markers: { place: Place; tripIds: string[]; tripNames: string[] }[] = [];
     const seenPlaces = new Set<string>();
     trips.forEach((trip) => {
       trip.destinations?.forEach((dest) => {
-        if (dest.latitude && dest.longitude && !seenPlaces.has(dest.id)) {
-          markers.push({ place: dest, tripId: trip.id, tripName: trip.name });
-          seenPlaces.add(dest.id);
+        if (dest.latitude && dest.longitude) {
+          if (!seenPlaces.has(dest.id)) {
+            markers.push({ place: dest, tripIds: [trip.id], tripNames: [trip.name] });
+            seenPlaces.add(dest.id);
+          } else {
+            let marker = markers.find((marker) => marker.place.id === dest.id);
+            marker?.tripIds.push(trip.id);
+            marker?.tripNames.push(trip.name);
+          }
         }
       });
     });
