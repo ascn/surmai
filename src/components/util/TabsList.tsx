@@ -28,7 +28,7 @@ export const TabsList = ({
             <Menu>
               <Menu.Target>
                 <ActionIcon variant="subtle" aria-label="Settings">
-                  <IconChevronDown size={'sm'} />
+                  <IconChevronDown size={18} />
                 </ActionIcon>
               </Menu.Target>
 
@@ -39,7 +39,7 @@ export const TabsList = ({
               </Menu.Dropdown>
             </Menu>
           </Group>
-          <Divider mt='sm' />
+          <Divider mt="sm" />
         </>
       )}
       {!isMobile && (

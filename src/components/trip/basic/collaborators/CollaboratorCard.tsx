@@ -35,7 +35,7 @@ export const CollaboratorButton = forwardRef<
           </Stack>
           {trip.canUpdate && (
             <ActionIcon
-              size={'xs'}
+              size={18}
               variant="subtle"
               aria-label={t('delete_collaborator', 'Delete Collaborator')}
               c={'red'}
