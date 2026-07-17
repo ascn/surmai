@@ -50,7 +50,7 @@ export const AttachmentViewer = ({
             {isPdf && <PDFViewer documentUrl={attachmentUrl} />}
             {isImage && <ImageViewer imageUrl={attachmentUrl} imageName={fileName} />}
             {isHtml && <HtmlViewer url={attachmentUrl} />}
-            {!(isPdf || isImage) && <div> Unable to render this file</div>}
+            {!(isPdf || isImage || isHtml) && <div> Unable to render this file</div>}
           </Group>
         </ScrollArea>
       </Stack>

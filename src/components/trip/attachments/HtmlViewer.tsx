@@ -8,7 +8,7 @@ export const HtmlViewer = ({ url }: { url: string }) => {
 
   useEffect(() => {
     getHtmlFile(url).then((text) => {
-      setHtmlContents(DOMPurify.sanitize(text));
+      setHtmlContents(DOMPurify.sanitize(text, { FORCE_BODY: true }));
     });
   }, [url]);
 

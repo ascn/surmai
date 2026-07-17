@@ -41,7 +41,7 @@ export const AttachmentsUploadField = ({ files, setFiles }: { files: File[]; set
           });
         }}
         maxSize={5 * 1024 ** 2}
-        accept={[...IMAGE_MIME_TYPE, ...PDF_MIME_TYPE]}
+        accept={[...IMAGE_MIME_TYPE, ...PDF_MIME_TYPE, 'text/html']}
         bd={'dashed 1px'}
       >
         <Group justify="center" mih={80} gap="xl" style={{ pointerEvents: 'none' }}>
