@@ -21,7 +21,7 @@ export const Attachments = ({
   onDelete,
 }: {
   attachments: Attachment[];
-  onDelete: (attachmentName: string) => Promise<unknown>;
+  onDelete?: (attachmentName: string) => Promise<unknown>;
 }) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery('(max-width: 50em)');
@@ -56,41 +56,43 @@ export const Attachments = ({
                 radius={0}
                 leftSection={getFileTypeIcon(entry.name)}
                 rightSection={
-                  <CloseButton
-                    size={20}
-                    title={t('delete_attachment', 'Delete Attachment')}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      openConfirmModal({
-                        title: t('delete_attachment', 'Delete Attachment'),
-                        confirmProps: { color: 'red' },
-                        children: (
-                          <Text size="sm">
-                            {t(
-                              'attachment_deletion_confirmation',
-                              'Deleting "{{attachmentName}}". This action cannot be undone.',
-                              { attachmentName: entry }
-                            )}
-                          </Text>
-                        ),
-                        labels: {
-                          confirm: t('delete', 'Delete'),
-                          cancel: t('cancel', 'Cancel'),
-                        },
-                        onCancel: () => {},
-                        onConfirm: () => {
-                          onDelete(entry.id).then(() => {
-                            showDeleteNotification({
-                              title: t('attachments', 'Attachments'),
-                              message: t('attachment_deleted', 'Attachment {{name}} has been deleted', {
-                                name: entry.name,
-                              }),
+                  onDelete && (
+                    <CloseButton
+                      size={20}
+                      title={t('delete_attachment', 'Delete Attachment')}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        openConfirmModal({
+                          title: t('delete_attachment', 'Delete Attachment'),
+                          confirmProps: { color: 'red' },
+                          children: (
+                            <Text size="sm">
+                              {t(
+                                'attachment_deletion_confirmation',
+                                'Deleting "{{attachmentName}}". This action cannot be undone.',
+                                { attachmentName: entry }
+                              )}
+                            </Text>
+                          ),
+                          labels: {
+                            confirm: t('delete', 'Delete'),
+                            cancel: t('cancel', 'Cancel'),
+                          },
+                          onCancel: () => {},
+                          onConfirm: () => {
+                            onDelete(entry.id).then(() => {
+                              showDeleteNotification({
+                                title: t('attachments', 'Attachments'),
+                                message: t('attachment_deleted', 'Attachment {{name}} has been deleted', {
+                                  name: entry.name,
+                                }),
+                              });
                             });
-                          });
-                        },
-                      });
-                    }}
-                  />
+                          },
+                        });
+                      }}
+                    />
+                  )
                 }
               >
                 <Anchor
@@ -107,6 +109,7 @@ export const Attachments = ({
                       withCloseButton: true,
                       fullScreen: isMobile,
                       size: 'auto',
+                      removeScrollProps: { allowPinchZoom: true },
                       innerProps: {
                         fileName: entry.name,
                         attachmentUrl: url,

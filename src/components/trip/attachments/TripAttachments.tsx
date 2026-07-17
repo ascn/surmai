@@ -30,6 +30,7 @@ export const TripAttachments = ({
       withCloseButton: true,
       fullScreen: isMobile,
       size: 'auto',
+      removeScrollProps: { allowPinchZoom: true },
       innerProps: {
         fileName: attachment.name,
         attachmentUrl: url,
