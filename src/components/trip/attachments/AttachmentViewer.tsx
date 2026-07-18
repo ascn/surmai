@@ -7,6 +7,7 @@ import { PDFViewer } from './PDFViewer.tsx';
 
 import type { ContextModalProps } from '@mantine/modals';
 import { useElementSize } from '@mantine/hooks';
+import { useSurmaiContext } from '../../../app/useSurmaiContext.ts';
 
 export const AttachmentViewer = ({
   innerProps,
@@ -20,11 +21,12 @@ export const AttachmentViewer = ({
   const isPdf = extension === 'pdf';
   const isImage = extension && ['jpg', 'jpeg', 'png', 'webp', 'bmp'].includes(extension);
   const isHtml = extension && ['html', 'htm'].includes(extension);
+  const { isMobile } = useSurmaiContext();
 
   const { ref, height } = useElementSize();
 
   return (
-    <Container ref={ref} h={'80vh'}>
+    <Container ref={ref} h={isMobile ? '90vh' : '80vh'}>
       <Stack
         justify="flex-start"
         style={{
